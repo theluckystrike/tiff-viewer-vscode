@@ -1,0 +1,189 @@
+{
+  "name": "tiff-viewer",
+  "displayName": "TIFF Viewer (16-bit, Float, GeoTIFF)",
+  "description": "Open TIFF and GeoTIFF files in VS Code. Multi-page stacks, 16-bit and float data with auto contrast, pixel values, tags and PNG export. Offline.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#0F2A2E",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18"
+  },
+  "categories": [
+    "Visualization",
+    "Data Science",
+    "Other"
+  ],
+  "keywords": [
+    "tiff",
+    "tif",
+    "tiff viewer",
+    "tiff preview",
+    "geotiff",
+    "bigtiff",
+    "multi-page tiff",
+    "16-bit",
+    "float32",
+    "image viewer",
+    "image preview",
+    "microscopy",
+    "fluorescence",
+    "scientific image",
+    "remote sensing",
+    "satellite",
+    "dem",
+    "elevation",
+    "raster",
+    "gis",
+    "epsg",
+    "contrast stretch",
+    "histogram",
+    "pixel value",
+    "exif tags",
+    "image metadata",
+    "lzw",
+    "deflate",
+    "png export",
+    "offline"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "tiffViewer.preview",
+        "displayName": "TIFF Viewer",
+        "selector": [
+          {
+            "filenamePattern": "*.tif"
+          },
+          {
+            "filenamePattern": "*.tiff"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "tiffViewer.openWalkthrough",
+        "title": "Get Started",
+        "category": "TIFF Viewer"
+      },
+      {
+        "command": "tiffViewer.openWith",
+        "title": "Open in TIFF Viewer",
+        "category": "TIFF Viewer"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "tiffViewer.openWith",
+          "when": "resourceExtname =~ /\\.(tif|tiff|gtiff|btf|tf8)$/i",
+          "group": "navigation@9"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "tiffViewer.openWith",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "TIFF Viewer",
+      "properties": {
+        "tiffViewer.maxFileMB": {
+          "type": "number",
+          "default": 1024,
+          "minimum": 1,
+          "maximum": 4096,
+          "description": "Files up to this size are decoded. Larger files show a message and the tags of every page, without pixels."
+        },
+        "tiffViewer.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask one time for a Marketplace rating after you have used TIFF Viewer for a few days. You can answer \"Later\" or \"Don't ask again\". Nothing is sent anywhere."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "tiffViewer.start",
+        "title": "Get started with TIFF Viewer",
+        "description": "Look at TIFF stacks, 16-bit and float data and GeoTIFF rasters without leaving VS Code.",
+        "steps": [
+          {
+            "id": "open",
+            "title": "Open a TIFF file",
+            "description": "Click a .tif or .tiff file in the Explorer. Multi-page files show a page strip on the left.\n[Find a TIFF file](command:workbench.action.quickOpen?%5B%22.tif%22%5D)",
+            "media": {
+              "image": "images/microscopy-16bit.png",
+              "altText": "A 16-bit microscopy TIFF in TIFF Viewer with auto contrast, a pixel value and the tags panel."
+            },
+            "completionEvents": [
+              "onCommand:workbench.action.quickOpen"
+            ]
+          },
+          {
+            "id": "contrast",
+            "title": "Pick a channel and a contrast stretch",
+            "description": "Use View to show one channel or the RGB composite, and the stretch menu for percentile, min to max or the full type range.",
+            "media": {
+              "markdown": "walkthrough/contrast.md"
+            }
+          },
+          {
+            "id": "geo",
+            "title": "Read GeoTIFF tags and coordinates",
+            "description": "The tags panel lists the CRS, pixel size, bounds and nodata value. The status bar shows map coordinates under the pointer.",
+            "media": {
+              "markdown": "walkthrough/geotiff.md"
+            }
+          },
+          {
+            "id": "settings",
+            "title": "Large files and export",
+            "description": "Export PNG saves the page as shown. Files over the size limit show their tags only.\n[Open settings](command:workbench.action.openSettings?%5B%22tiffViewer%22%5D)",
+            "media": {
+              "markdown": "walkthrough/settings.md"
+            },
+            "completionEvents": [
+              "onCommand:workbench.action.openSettings"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build.js --production",
+    "test": "node scripts/build.js --production && node --test \"test/*.test.js\"",
+    "samples": "node scripts/make-samples.js samples",
+    "package": "npm run build && npx -y @vscode/vsce package --no-dependencies -o dist/"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "utif2": "4.1.0"
+  },
+  "homepage": "https://github.com/theluckystrike/tiff-viewer-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/theluckystrike/tiff-viewer-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/tiff-viewer-vscode"
+  }
+}

@@ -1,0 +1,49 @@
+html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+body { font-family: var(--vscode-font-family); font-size: var(--vscode-font-size); color: var(--vscode-foreground); background: var(--vscode-editor-background); }
+#app { height: 100%; display: flex; flex-direction: column; }
+.loading { padding: 16px; opacity: .7; }
+button, select { font: inherit; color: var(--vscode-button-secondaryForeground); background: var(--vscode-button-secondaryBackground); border: 1px solid var(--vscode-button-border, transparent); border-radius: 3px; padding: 2px 8px; cursor: pointer; flex-shrink: 0; }
+button:hover { background: var(--vscode-button-secondaryHoverBackground); }
+button:disabled { opacity: .5; cursor: default; }
+button[aria-pressed="true"] { background: var(--vscode-button-background); color: var(--vscode-button-foreground); }
+button.icon { min-width: 24px; padding: 2px 4px; }
+button.link { background: none; border: none; color: var(--vscode-textLink-foreground); padding: 0 4px; font-size: 11px; font-weight: normal; }
+select { color: var(--vscode-dropdown-foreground); background: var(--vscode-dropdown-background); border-color: var(--vscode-dropdown-border); max-width: 220px; }
+:focus-visible { outline: 1px solid var(--vscode-focusBorder); outline-offset: 1px; }
+.bar, .strip, .stage, .status { user-select: none; -webkit-user-select: none; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 6px 10px; border-bottom: 1px solid var(--vscode-panel-border, rgba(128,128,128,.3)); }
+.bar .title { font-weight: 600; max-width: 30ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 1; min-width: 6ch; }
+.muted { opacity: .7; }
+.small { font-size: 11px; }
+.pager, .group, .ctl { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.pagelabel { min-width: 9ch; text-align: center; }
+.zoom { min-width: 5ch; text-align: center; font-variant-numeric: tabular-nums; }
+.main { flex: 1; display: flex; min-height: 0; }
+.strip { width: 112px; flex-shrink: 0; overflow-y: auto; border-right: 1px solid var(--vscode-panel-border, rgba(128,128,128,.3)); padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px; }
+.strip[hidden] { display: none; }
+.page { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px; background: transparent; border: 1px solid transparent; }
+.page[aria-selected="true"] { border-color: var(--vscode-focusBorder); background: var(--vscode-list-activeSelectionBackground); color: var(--vscode-list-activeSelectionForeground); }
+.page canvas { max-width: 88px; max-height: 88px; background: repeating-conic-gradient(rgba(128,128,128,.25) 0 25%, transparent 0 50%) 0 0 / 10px 10px; }
+.page canvas:not(.ready) { width: 88px; height: 56px; }
+.page.bad canvas { outline: 1px dashed var(--vscode-errorForeground); }
+.plabel { font-size: 11px; max-width: 92px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stage { flex: 1; position: relative; overflow: hidden; cursor: crosshair; min-width: 120px; outline: none;
+  background: repeating-conic-gradient(rgba(128,128,128,.12) 0 25%, transparent 0 50%) 0 0 / 16px 16px; }
+.stage.dragging { cursor: grabbing; }
+canvas.img { position: absolute; left: 0; top: 0; transform-origin: 0 0; image-rendering: auto; }
+canvas.img.pixelated { image-rendering: pixelated; }
+.notice { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); max-width: min(560px, 85%); padding: 14px 18px; border-radius: 4px;
+  background: var(--vscode-editorWidget-background); border: 1px solid var(--vscode-editorWidget-border, rgba(128,128,128,.4)); line-height: 1.5; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.notice.soft { top: 12px; transform: translateX(-50%); padding: 6px 12px; opacity: .92; }
+.notice.error { border-color: var(--vscode-errorForeground); }
+#app > .notice { position: static; transform: none; margin: 24px auto; }
+.side { width: 300px; flex-shrink: 0; overflow-y: auto; border-left: 1px solid var(--vscode-panel-border, rgba(128,128,128,.3)); padding: 4px 10px 16px; box-sizing: border-box; font-size: 12px; }
+.side[hidden] { display: none; }
+.side h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; opacity: .8; margin: 12px 0 4px; display: flex; align-items: center; gap: 6px; }
+table.kv { border-collapse: collapse; width: 100%; table-layout: fixed; }
+table.kv th { text-align: left; font-weight: normal; opacity: .75; width: 42%; vertical-align: top; padding: 2px 6px 2px 0; overflow-wrap: anywhere; }
+table.kv td { padding: 2px 0; overflow-wrap: anywhere; white-space: pre-wrap; font-family: var(--vscode-editor-font-family); font-size: 11px; }
+canvas.hist { width: 100%; height: 48px; margin-top: 6px; }
+.status { display: flex; justify-content: space-between; gap: 12px; padding: 3px 10px; border-top: 1px solid var(--vscode-panel-border, rgba(128,128,128,.3)); font-family: var(--vscode-editor-font-family); font-size: 12px; white-space: nowrap; overflow: hidden; }
+.readout { overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 760px) { .side { width: 220px; } .strip { width: 84px; } .page canvas { max-width: 64px; } }

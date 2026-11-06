@@ -1,0 +1,16 @@
+src/**
+test/**
+scripts/**
+samples/**
+node_modules/**
+e2e-tmp/**
+**/*.map
+icon.svg
+.gitignore
+dist/*.vsix
+*.vsix
+package-lock.json
+images/multipage-stack.png
+images/channels-16bit.png
+images/geotiff-float32.png
+images/light-theme.png
