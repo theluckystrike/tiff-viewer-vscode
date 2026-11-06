@@ -30,6 +30,8 @@ worker.onerror = e => showNotice('The decoder stopped: ' + (e.message || 'unknow
 
 // ---------- layout ----------
 let ui = {};
+// The Sponsor and More free viewers line from the host HTML (absent when tiffViewer.showSupportLinks is off).
+const supportLine = document.getElementById('zovo-support');
 function buildLayout() {
   app.textContent = '';
   const pageSel = el('span', { class: 'pager' },
@@ -62,6 +64,7 @@ function buildLayout() {
   ui.side = el('aside', { class: 'side' });
   ui.status = el('div', { class: 'status' }, ui.readout = el('span', { class: 'readout', text: 'Move the pointer over the image to read pixel values.' }), ui.timing = el('span', { class: 'muted timing' }));
   app.append(ui.bar, el('div', { class: 'main' }, ui.strip, ui.stage, ui.side), ui.status);
+  if (supportLine) { supportLine.classList.remove('zovo-support-fixed'); ui.status.append(supportLine); }
   wireStage();
   buildStrip();
 }

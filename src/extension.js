@@ -6,6 +6,7 @@ const { FileSource } = require('./core/source');
 const { parseTiff, BufferReader } = require('./core/tiff');
 const { validateWebviewMessage, sizePlan, fmtSize, publicPages, MB } = require('./core/protocol');
 const { createRatingPrompt } = require('./rate');
+const { registerSupport, commandUris, showLinks } = require('./support');
 
 const VIEW_TYPE = 'tiffViewer.preview';
 const MAX_LISTED_PAGES = 2000;
@@ -37,13 +38,15 @@ class TiffEditorProvider {
     const dist = vscode.Uri.joinPath(ctx.extensionUri, 'dist');
     const media = vscode.Uri.joinPath(ctx.extensionUri, 'media');
     const folder = uri.with({ path: path.posix.dirname(uri.path) });
-    panel.webview.options = { enableScripts: true, localResourceRoots: [dist, media, folder] };
+    // Command links are limited to the two support commands and the settings page (footer "Hide" link).
+    panel.webview.options = { enableScripts: true, localResourceRoots: [dist, media, folder], enableCommandUris: commandUris('tiffViewer') };
     const name = path.posix.basename(uri.path);
     panel.webview.html = buildHtml({
       cspSource: panel.webview.cspSource,
       scriptUri: panel.webview.asWebviewUri(vscode.Uri.joinPath(dist, 'webview.js')).toString(),
       styleUri: panel.webview.asWebviewUri(vscode.Uri.joinPath(media, 'webview.css')).toString(),
       title: name,
+      showSupportLinks: showLinks(vscode, 'tiffViewer'),
     });
     let disposed = false;
     let counted = false; // one success per opened tab, for the rating prompt
@@ -96,6 +99,7 @@ class TiffEditorProvider {
 
 function activate(context) {
   rating = createRatingPrompt({ vscode, context, extensionId: 'zovo.tiff-viewer', section: 'tiffViewer', message: (n) => `TIFF Viewer has opened ${n} images for you. A rating helps other people find it.` });
+  registerSupport({ vscode, context, prefix: 'tiffViewer', selfId: 'zovo.tiff-viewer' });
   context.subscriptions.push(
     vscode.window.registerCustomEditorProvider(VIEW_TYPE, new TiffEditorProvider(context), {
       supportsMultipleEditorsPerDocument: true,

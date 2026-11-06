@@ -2,7 +2,7 @@
   "name": "tiff-viewer",
   "displayName": "TIFF Viewer (16-bit, Float, GeoTIFF)",
   "description": "Open TIFF and GeoTIFF files in VS Code. Multi-page stacks, 16-bit and float data with auto contrast, pixel values, tags and PNG export. Offline.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "zovo",
   "license": "MIT",
   "icon": "icon.png",
@@ -85,6 +85,16 @@
         "command": "tiffViewer.openWith",
         "title": "Open in TIFF Viewer",
         "category": "TIFF Viewer"
+      },
+      {
+        "command": "tiffViewer.supportDeveloper",
+        "title": "Support the developer",
+        "category": "TIFF Viewer"
+      },
+      {
+        "command": "tiffViewer.moreViewers",
+        "title": "More free viewers",
+        "category": "TIFF Viewer"
       }
     ],
     "menus": {
@@ -116,6 +126,11 @@
           "type": "boolean",
           "default": true,
           "description": "Ask one time for a Marketplace rating after you have used TIFF Viewer for a few days. You can answer \"Later\" or \"Don't ask again\". Nothing is sent anywhere."
+        },
+        "tiffViewer.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Sponsor and More free viewers links in the status line of the viewer. The change shows in files you open next. Nothing is sent anywhere."
         }
       }
     },
@@ -185,5 +200,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/theluckystrike/tiff-viewer-vscode"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike"
   }
 }

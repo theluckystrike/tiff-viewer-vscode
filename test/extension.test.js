@@ -53,7 +53,7 @@ test('activate registers the custom editor and the commands', () => {
   const ctx = { subscriptions: [], extensionUri: uriOf('/ext'), globalState: { get() {}, async update() {} } };
   ext.activate(ctx);
   assert.equal(vscodeMock.window.registered[0][0], 'tiffViewer.preview');
-  assert.deepEqual(vscodeMock.commands.list.sort(), ['tiffViewer.openWalkthrough', 'tiffViewer.openWith']);
+  assert.deepEqual(vscodeMock.commands.list.sort(), ['tiffViewer.moreViewers', 'tiffViewer.openWalkthrough', 'tiffViewer.openWith', 'tiffViewer.supportDeveloper']);
   const pkg = require('../package.json');
   assert.equal(pkg.contributes.customEditors[0].viewType, ext.VIEW_TYPE);
   assert.deepEqual(pkg.contributes.customEditors[0].selector.map(s => s.filenamePattern), ['*.tif', '*.tiff']);
@@ -131,4 +131,33 @@ test('copy goes to the clipboard; unknown messages are dropped; rendered counts 
   f.close();
   await f.send({ type: 'ready' });
   assert.equal(f.sent.length, n, 'nothing is posted after the panel closed');
+});
+
+// ---------- support links (Sponsor, More free viewers) ----------
+test('support: package.json has the sponsor field, the two commands and the setting', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+  const support = require('../src/support');
+  assert.equal(pkg.sponsor.url, 'https://github.com/sponsors/theluckystrike');
+  assert.equal(pkg.sponsor.url, support.sponsorUrl());
+  const ids = pkg.contributes.commands.map(c => c.command);
+  assert.ok(ids.includes('tiffViewer.supportDeveloper') && ids.includes('tiffViewer.moreViewers'));
+  const cfg = [].concat(pkg.contributes.configuration);
+  const prop = cfg.map(c => c.properties['tiffViewer.showSupportLinks']).find(Boolean);
+  assert.equal(prop.default, true);
+  assert.ok(support.otherProducts('zovo.tiff-viewer').every(p => p.id !== 'zovo.tiff-viewer'));
+});
+
+test('support: the footer shows by default and tiffViewer.showSupportLinks=false hides it', async () => {
+  const file = path.join(tmp, 'sup.tif');
+  fs.writeFileSync(file, encodeTiff([{ width: 2, height: 2, data: new Uint8Array(4) }]));
+  try {
+    for (const [val, shown] of [[undefined, true], [false, false]]) {
+      if (val === undefined) delete state.config.showSupportLinks; else state.config.showSupportLinks = val;
+      const f = await open(file);
+      const html = f.panel.webview.html;
+      assert.equal(/id="zovo-support"/.test(html), shown, String(val));
+      assert.equal(html.includes('command:tiffViewer.supportDeveloper'), shown);
+      assert.deepEqual(f.panel.webview.options.enableCommandUris, ['tiffViewer.supportDeveloper', 'tiffViewer.moreViewers', 'workbench.action.openSettings']);
+    }
+  } finally { delete state.config.showSupportLinks; }
 });
