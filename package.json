@@ -2,7 +2,7 @@
   "name": "tiff-viewer",
   "displayName": "TIFF Viewer (16-bit, Float, GeoTIFF)",
   "description": "Open TIFF and GeoTIFF files in VS Code. Multi-page stacks, 16-bit and float data with auto contrast, pixel values, tags and PNG export. Offline.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "zovo",
   "license": "MIT",
   "icon": "icon.png",
