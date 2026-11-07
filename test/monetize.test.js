@@ -11,7 +11,7 @@ test('More free viewers starts with 3 to 5 related extensions, without this one'
   const rel = support.relatedProducts(SELF);
   assert.ok(rel.length >= 3 && rel.length <= 5, String(rel.length));
   assert.ok(rel.every((p) => p.id !== SELF));
-  assert.deepEqual(rel.map((p) => p.id), ["zovo.hdf5-netcdf-explorer", "zovo.tensor-viewer", "zovo.dicom-nifti-viewer"]);
+  assert.deepEqual(rel.map((p) => p.id), ["zovo.dicom-nifti-viewer", "zovo.hdf5-netcdf-explorer", "zovo.tensor-viewer"]);
   const items = support.pickItems(SELF, () => false);
   assert.equal(items[0].label, 'Related to this extension');
   assert.deepEqual(items.slice(1, 1 + rel.length).map((i) => i.product.id), rel.map((p) => p.id));
