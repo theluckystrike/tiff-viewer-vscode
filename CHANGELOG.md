@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 (2026-11-07)
+
+- The Marketplace name is now "TIFF Viewer & TIF Viewer (16-bit, GeoTIFF)" (it was "TIFF Viewer (16-bit, Float, GeoTIFF)"), so it matches what people type in the Extensions search. The extension id, commands and settings stay the same.
+- The Marketplace description now starts with "TIFF viewer and TIF viewer for TIFF and GeoTIFF files in VS Code".
+- Marketplace search keywords updated, with the phrases people search for first.
+
 ## 0.1.2 (2026-11-07)
 
 - "More free viewers" now starts with the Zovo extensions most related to this one. Picking one opens its Marketplace page, where you choose to install it.

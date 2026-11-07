@@ -1,4 +1,4 @@
-# TIFF Viewer (16-bit, Float, GeoTIFF)
+# TIFF Viewer & TIF Viewer (16-bit, GeoTIFF)
 
 ![License MIT](https://img.shields.io/badge/license-MIT-blue)
 ![Works offline](https://img.shields.io/badge/network-none-green)
