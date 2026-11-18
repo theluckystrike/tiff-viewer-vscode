@@ -14,6 +14,13 @@ Click a `.tif` or `.tiff` file and see it in VS Code, even when it is a 16-bit m
 - GeoTIFF tags are readable. The panel shows the EPSG code, pixel size, bounds and nodata value, and the status bar gives the map coordinate of the pixel you point at. Nodata and NaN pixels stay transparent and are left out of the statistics.
 - Big files don't block the editor. Pixels are decoded in a background worker. Files over 1 GB show a clear message and still list the tags of every page, read with a few small reads from disk.
 
+## Teams and companies
+
+- Zovo Pro Team is the company licence: USD 59 once for a team of 5, one key, the Pro tools in every Zovo extension that has them. [See Zovo Pro Team](https://license.zovo.one/buy/zovo-pro-team?client_reference_id=readme-tiff)
+- Commercial use is allowed.
+- The key is checked on your computer, so it works offline. No account and no subscription.
+- Invoice with your company name and tax ID on request: support@zovo.one.
+
 ## Quick start
 
 1. Install TIFF Viewer.
